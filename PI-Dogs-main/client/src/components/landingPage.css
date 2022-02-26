@@ -1,0 +1,48 @@
+.landing_page {
+    background-image: url('../images/dog.jpg');
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    background-size: contain;
+    padding-top: 80px;
+    margin: -40px;
+   
+}
+
+.title_landing{
+    width: 60rem;
+    margin-left: 30rem;
+    margin-top: 9rem;
+    padding-left: 3rem;
+}
+
+.subtitle_landing {
+    
+    margin-top: 0rem;
+    margin-left: 50rem;
+    padding-left: 3rem;
+    width: 20rem;
+    justify-content: center;
+    text-align: center;
+    word-spacing: 0.1cm;
+
+
+}
+
+.button_landing {
+    background-color: transparent;
+    border: none;
+    outline: none;
+    font-size: 50px;
+    margin-left: 40rem;
+    margin-top: 2rem;
+    
+}
+
+.button_landing:hover {
+    outline-offset: 80px;
+    text-shadow: 5px 5px 10px #fff;
+    border: none;
+}
