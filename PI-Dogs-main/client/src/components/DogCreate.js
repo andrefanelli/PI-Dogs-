@@ -8,30 +8,38 @@ function validate(input){
 
     let errors = {};
 
-    if(!input.name.trim()) {
+    if(!input.name.trim()) { //input es mi estado local
         errors.name = 'Write a name, please'; 
     }else if(parseInt(input.name)){
-        errors.name = 'Name is invalid, please write only letters'
-    }   
-
-    if(input.hmin < 0 || input.hmin > 100){
-        errors.hmin = 'Require field, please write a valid number between 1 and 100'
-    }
-    if(input.hmax < 0 || input.hmax > 100){
-        errors.hmax = 'Require field, please write a valid number between 1 and 100'
-    }
-    if(input.hmax < input.hmin){
-        errors.hmin = 'The minimum value cannot be greater than the maximum value'
+        errors.name = 'Name is invalid, please use at least one letter at the beginning'
     }
 
-    if(input.wmin < 0 || input.wmin > 100){
-        errors.wmin = 'Require field, please write a valid number between 1 and 100'
+    if(!input.image) {
+        errors.image = 'Upload an image, please';  
+
     }
-    if(input.wmax < 0 || input.wmax > 100){
-        errors.wmax = 'Require field, please write a valid number between 1 and 100'    
+    if(!input.temperament) {
+        errors.temperament = 'Select one or more temperaments, please';
+
     }
-    if(input.wmax < input.wmin){
-        errors.wmin = 'The minimum value cannot be greater than the maximum value'
+    if(input.heightMin < 0 || input.heightMin > 100){
+        errors.heightMin = 'Require field, please write a valid number between 1 and 100'
+    }
+    if(input.heightMax < 0 || input.heightMax > 100){
+        errors.heightMax = 'Require field, please write a valid number between 1 and 100'
+    }
+    if(input.heightMax < input.heightMin){
+        errors.heightMin = 'The minimum value cannot be greater than the maximum value'
+    }
+
+    if(input.weightMin < 0 || input.weightMin > 100){
+        errors.weightMin = 'Require field, please write a valid number between 1 and 100'
+    }
+    if(input.weightMax < 0 || input.weightMax > 100){
+        errors.weightMax = 'Require field, please write a valid number between 1 and 100'    
+    }
+    if(input.weightMax < input.weightMin){
+        errors.weightMin = 'The minimum value cannot be greater than the maximum value'
     }
 
     if(input.lmin < 0 || input.lmin > 19){
@@ -58,29 +66,23 @@ export default function DogCreate(){
 
         name: '',
         image: '',
-        height: '',
-        weight: '',
-        life_span: '',
+        heightMin: '',
+        heightMax: '',
+        weightMin: '',
+        weightMax: '',
+        lmin: '',
+        lmax: '',
         temperament: []
 
     });
-/*
-    const [input, SetInput] = useState({
-        hmin: 0,
-        hmax: 0,
-        wmin: 0,
-        wmax: 0,
-        lmin: 0,
-        lmax: 0,
-    })
-*/
+
 
 function handleChange(e){
     setInput({
         ...input,
         [e.target.name] : e.target.value //name seria nombre, imagen, peso, etc; y value el valor de cada uno
     })
-    setErrors(validate({
+    setErrors(validate({ //seteo mi estado local errors
         ...input,
         [e.target.name]: e.target.value
     }));
@@ -96,18 +98,42 @@ function handleSelectTemperament(e){
 
 function handleSubmit(e){ //FORM
     e.preventDefault();
-    console.log(input)
-    dispatch(postDog(input))
+    setErrors(
+        validate({
+            ...input,
+            [e.target.name]: e.target.value,
+        })
+    );
+    if(!Object.keys(errors).length && input.name && input.image && input.heightMin && input.heightMax && input.weightMin && input.weightMax && input.lmin && input.lmax && input.temperament){
+    
+    input.heightMax += ' cm'
+    input.weightMax += ' kgs'
+    input.life_span = input.lmin + ' - ' + input.lmax + ' years'
+    dispatch(postDog(input));
     alert('Dog created 🐶')
     setInput({
         name: '',
         image: '',
-        height: '',
-        weight: '',
-        life_span: '',
+        heightMin: '',
+        heightMax: '',
+        weightMin: '',
+        weightMax: '',
+        lmin: '',
+        lmax: '',
         temperament: []
     })
+}else {
+    alert('ERROR: Dog not created 😕');
+    return;
+}
     navigate('/home') //cdo termine de crear el dog, q me redirija al home
+}
+
+function  handleDelete(el){
+    setInput({
+        ...input, //me traigo el anterior para no pisarlo
+        temperament: input.temperament.filter( temp => temp !==el)
+    })
 }
 
 
@@ -123,7 +149,7 @@ function handleSubmit(e){ //FORM
     return (
        
         <div>
-            <Link to= '/home'><button>HOME</button></Link>
+            <Link as={Link} to= '/home'><button>HOME</button></Link>
             <h1>BE CREATIVE 🐾</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <div>
@@ -147,53 +173,56 @@ function handleSubmit(e){ //FORM
                     alt= 'not found'
                     onChange={(e) => handleChange(e)}
                     />
+                    {errors.image && (
+                        <p className='error'>{errors.image}</p>
+                    )}    
                 </div>
                 <div>
                     <input className='input'
                     placeholder='Min height'
                     type= 'number'
-                    value= {input.hmin}
-                    name= 'hmin'
+                    value= {input.heightMin}
+                    name= 'heightMin'
                     onChange={(e) => handleChange(e)}
                     />
-                    {errors.hmin && (
-                        <p className='error'>{errors.hmin}</p>
+                    {errors.heightMin && (
+                        <p className='error'>{errors.heightMin}</p>
                     )}
                 </div>
                 <div>
                     <input className='input'
                     placeholder='Max height'
                     type= 'number'
-                    value= {input.hmax}
-                    name= 'hmax'
+                    value= {input.heightMax}
+                    name= 'heightMax'
                     onChange={(e) => handleChange(e)}
                     />
-                    {errors.hmax && (
-                        <p className='error'>{errors.hmax}</p>
+                    {errors.heightMax && (
+                        <p className='error'>{errors.heightMax}</p>
                     )}
                 </div>
                 <div>
                     <input className='input'
                     placeholder='Min weight'
                     type= 'number'
-                    value= {input.wmin}
-                    name= 'wmin'
+                    value= {input.weightMin}
+                    name= 'weightMin'
                     onChange={(e) => handleChange(e)}
                     />
-                    {errors.wmin && (
-                        <p className='error'>{errors.wmin}</p>
+                    {errors.weightMin && (
+                        <p className='error'>{errors.weightMin}</p>
                     )}
                 </div>
                 <div>
                     <input className='input'
                     placeholder='Max weight'
                     type= 'number'
-                    value= {input.wmax}
-                    name= 'wmax'
+                    value= {input.weightMax}
+                    name= 'weightMax'
                     onChange={(e) => handleChange(e)}
                     />
-                    {errors.wmax && (
-                        <p className='error'>{errors.wmax}</p>
+                    {errors.weightMax && (
+                        <p className='error'>{errors.weightMax}</p>
                     )}
                 </div>
                 <div>
@@ -222,8 +251,11 @@ function handleSubmit(e){ //FORM
                 </div>
                 <label className='temperament'> Temperaments </label>
                 <select onChange={(e) => handleSelectTemperament(e)}>
+                {errors.temperament && (
+                        <p className='error'>{errors.temperament}</p>
+                    )} 
                 {temperament.map(t => (
-                        <option key={t.name} value={t.name}>{t.name}</option>
+                        <option key={t.id} value={t.name}>{t.name}</option>
                     ))}
                 </select>
                 <div>
@@ -231,6 +263,14 @@ function handleSubmit(e){ //FORM
                   
                 </div>
             </form>
+            {input.temperament.map(el => 
+                <ul key={el}>
+                  <li>
+                    <p>{el}</p>
+                    <button onClick={() => handleDelete(el)}>X</button>
+                  </li>
+                </ul>    
+                    )}
         </div>
         
     )

@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'; //hooks
-import { getDogs, getTemperament, filterDogsByTemperament, filterCreated, orderByName } from '../actions';
+import { getDogs, getTemperament, filterDogsByTemperament, filterCreated, orderByName, orderByWeight } from '../actions';
 import {Link} from 'react-router-dom';
 import Card from './Card';
 import Pagination from './Pagination';
@@ -68,6 +68,14 @@ if(!allDogs.length) {
     dispatch(orderByName(e.target.value));//el payload
     setCurrentPage(1); //seteo la pag actual 1
     setOrder(e.target.value);//aca se setea el ordenamiento
+ };
+
+ function handleWeight(e){
+    e.preventDefault();
+    dispatch(orderByWeight(e.target.value));
+    setCurrentPage(1);
+    setOrder(e.target.value);
+
  }
 
  
@@ -81,7 +89,7 @@ if(!allDogs.length) {
                  <option value='Desc'>Z-A</option>
              </select>
              <select onChange={(e) => handleFilterTemperament(e)}>
-                 <option>Temperament</option>
+                 <option>Temperaments</option>
                  <option value='All'>All</option>
 
                  {allTemperament.map((temperament) => (
@@ -91,11 +99,13 @@ if(!allDogs.length) {
                  ))}
              </select>
 
-             <select>
+             <select onChange={(e) => handleWeight(e)}>
                  <option>Weight</option>
+                 <option value="Higher">Higher</option>
+                 <option value="Less">Less</option>
              </select>
              <select onChange={(e) => handleFilterCreated(e)}>
-                 <option>All Dogs</option>
+                 <option>Dogs</option>
                  <option value='All'>All</option>
                  <option value='Created'>Created</option>
                  <option value='Api'>Existent</option>
@@ -111,16 +121,18 @@ if(!allDogs.length) {
          <ul className='card_grid'>
             {currentDogs?.map((el) => {
                 return (
-                   <Link to={'/home/' + el.id}>
+                <div key={el.id}> 
+                   
                      <Card
                         id={el.id}
                         name={el.name}
                         image={el.image}
-                        temperament={el.temperament}
+                        temperament={el.temperament ? el.temperament : el.temperaments?.map((ele, index) => el.temperaments.length -1 === index? ele.name : ele.name + (', '))}
+                        weight={el.weight ? el.weight : el.weightMin + (' - ') + el.weightMax}
                         key={el.id}
-                        weight={el.weight}
                     />
-                    </Link> 
+                    
+                </div>  
                     );
                   })}
          </ul>

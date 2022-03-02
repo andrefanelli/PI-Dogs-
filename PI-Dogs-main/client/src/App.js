@@ -3,6 +3,7 @@ import React from 'react';
 import LandingPage from './components/LandingPage';
 import Home from './components/Home';
 import DogCreate from './components/DogCreate';
+import Detail from './components/Detail';
 import './App.css';
 
 
@@ -15,6 +16,8 @@ function App() {
           <Route exact path= '/' element={<LandingPage/>}/>
           <Route path= '/home' element={<Home/>}/>
           <Route path= '/dog' element={<DogCreate/>}/>
+          <Route path= '/dog/:id' element={<Detail/>}/>
+
 
        </Routes>
       

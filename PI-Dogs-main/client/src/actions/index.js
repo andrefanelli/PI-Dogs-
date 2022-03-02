@@ -70,3 +70,26 @@ export function orderByName(payload) {
         payload
     }
 }
+
+export function orderByWeight(payload) {
+    return {
+        type: 'ORDER_BY_WEIGHT',
+        payload
+    }
+}
+
+export function getDetail(id){
+    if(id){
+        return async function (dispatch){
+            try {
+                const detail = await axios.get(`http://localhost:3001/dog/${id}`);
+                dispatch ({
+                    type: 'GET_DETAIL',
+                    payload: detail.data
+        })   
+    } catch(error){
+    console.log(error)
+   } 
+  }
+ }
+}

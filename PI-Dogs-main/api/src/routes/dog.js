@@ -76,8 +76,10 @@ router.post('/', async (req, res) => {
     let {
           name, 
           image, 
-          height, 
-          weight, 
+          heightMin,
+          heightMax,  
+          weightMin,
+          weightMax, 
           life_span, 
           createdInDb, 
           temperament 
@@ -86,8 +88,10 @@ router.post('/', async (req, res) => {
     let dogCreated = await Dog.create ({ //creo el perro con todo esto)
           name, 
           image, 
-          height, 
-          weight, 
+          heightMin,
+          heightMax,  
+          weightMin,
+          weightMax, 
           life_span, 
           createdInDb, 
     })  
