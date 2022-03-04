@@ -16,8 +16,8 @@ export default function Home(){  //todo lo de abajo sería como hacer un mapStat
     const allTemperament = useSelector((state) => state.temperament)
 //Paginado: un estado con la pag actual y un estado que me setee la pag actual    
     const[currentPage, setCurrentPage] = useState(1) //use State xq es un estado local. Es 1 xq siempre voy a arrancar en la 1er pag
-    const[dogsPerPage, setDogsPerPage] = useState(8)
-    const [order, setOrder] = useState('')
+    const[dogsPerPage, /*setDogsPerPage*/] = useState(8)
+    const [/*order*/, setOrder] = useState('')
 
     const indexOfLastDog = currentPage * dogsPerPage // 1 * 8 = 8   mas que un index se refiere a cantidad
     const indexOfFirstDog = indexOfLastDog - dogsPerPage // 8 - 8 = 0
@@ -80,9 +80,9 @@ if(!allDogs.length) {
 
  
  return (
-     <div>
-         <Link to= '/dog'>Create Dog</Link>
-         <button onClick={e=> {handleClick(e)}}>Reload Dogs</button>
+     <div className='fondo'>
+         <Link className='create_button' to= '/dog'>Create Dog</Link>
+         <button className='reload_dogs' onClick={e=> {handleClick(e)}}>Reload Dogs</button>
          <div>
              <select onClick={e=> {handleSort(e)}}>
                  <option value='Asc'>A-Z</option>
@@ -101,8 +101,8 @@ if(!allDogs.length) {
 
              <select onChange={(e) => handleWeight(e)}>
                  <option>Weight</option>
-                 <option value="Higher">Higher</option>
-                 <option value="Less">Less</option>
+                 <option value="Heavy">Heavy</option>
+                 <option value="Light">Light</option>
              </select>
              <select onChange={(e) => handleFilterCreated(e)}>
                  <option>Dogs</option>
@@ -121,8 +121,7 @@ if(!allDogs.length) {
          <ul className='card_grid'>
             {currentDogs?.map((el) => {
                 return (
-                <div key={el.id}> 
-                   
+                
                      <Card
                         id={el.id}
                         name={el.name}
@@ -132,7 +131,6 @@ if(!allDogs.length) {
                         key={el.id}
                     />
                     
-                </div>  
                     );
                   })}
          </ul>

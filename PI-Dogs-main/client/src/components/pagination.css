@@ -1,6 +1,4 @@
 .pagination_container{
-    gap: 5px;
-    color: rgb(7, 202, 7);
     font-size: 1rem;
     display: flex;
     justify-content: center;
@@ -10,19 +8,20 @@
     
 }
 
-.pagination_container a{
-    gap: 5px;
+.pagination {
+    background-color: transparent;
+    outline: none;
+    border: none;
     font-weight: bold;
-    color: rgb(7, 202, 7);
+    color: orangered;
     font-size: 1rem;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 8px 16px;
-    margin-bottom: 2rem;
-}    
+    margin-bottom: 2rem;   
+}
 
-.pagination_container a:hover {
-  
-    color: goldenrod;
+.pagination:hover{
+    color: rgb(7, 202, 7); 
 }

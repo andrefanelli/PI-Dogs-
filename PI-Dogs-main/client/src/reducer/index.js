@@ -87,7 +87,7 @@ function rootReducer(state= initialState, action){
 
 
         case 'ORDER_BY_WEIGHT':
-            let sortWeight = action.payload === 'Less' ?
+            let sortWeight = action.payload === 'Light' ?
             state.dogs.sort(function(a, b) {
                 if (a.weight > b.weight) {
                     return 1;

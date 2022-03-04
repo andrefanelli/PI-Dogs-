@@ -1,37 +1,41 @@
 import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { getDetail } from '../actions';
+import './detail.css';
 
 
 export default function Detail(){
     const dispatch = useDispatch();
     const {id} = useParams();
+    const navigate = useNavigate();
+ 
+    
+
 
     useEffect(() => {
-        dispatch(getDetail(id));   
+        dispatch(getDetail(id)); 
+        return()=> {dispatch(getDetail())}
     },[id, dispatch]);
 
     
 
     const detail = useSelector((state) => state.detail)
 
-    function handleReset() {
-        dispatch(getDetail());
-    }        
+       
 
     return (
-        <div>
+        <div className='fondo_3'>
              <div className="button_container_detail">
-            <Link to='/home' onClick={handleReset}>
-                <button className="button_detail">HOME</button>
-                </Link>
+  
+                <button className="button_detail" onClick={()=> navigate('/home')}>HOME</button>
+
             {
                 detail.length > 0 ?
                 <div>
                     <h1>{detail[0].name}</h1>
-                    <img src={detail[0].image} alt='not found'/>
+                    <img className='image_detail' src={detail[0].image} alt='not found'/>
                     <p>Height : {!detail[0].createdInDb? detail[0].height : detail[0].heightMin + ' - ' + detail[0].heightMax}</p>
                     <p>Weight : {!detail[0].createdInDb? detail[0].weight : detail[0].weightMin + ' - ' + detail[0].weightMax}</p>
                     <p>Life Span : {detail[0].life_span}</p>

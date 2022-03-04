@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { postDog, getTemperament } from '../actions';
+import './dogCreate.css'
 
 
 function validate(input){
@@ -25,7 +26,7 @@ function validate(input){
     if(input.heightMin < 0 || input.heightMin > 100){
         errors.heightMin = 'Require field, please write a valid number between 1 and 100'
     }
-    if(input.heightMax < 0 || input.heightMax > 100){
+    if(input.heightMax < 1 || input.heightMax > 100){
         errors.heightMax = 'Require field, please write a valid number between 1 and 100'
     }
     if(input.heightMax < input.heightMin){
@@ -35,7 +36,7 @@ function validate(input){
     if(input.weightMin < 0 || input.weightMin > 100){
         errors.weightMin = 'Require field, please write a valid number between 1 and 100'
     }
-    if(input.weightMax < 0 || input.weightMax > 100){
+    if(input.weightMax < 1 || input.weightMax > 100){
         errors.weightMax = 'Require field, please write a valid number between 1 and 100'    
     }
     if(input.weightMax < input.weightMin){
@@ -148,7 +149,8 @@ function  handleDelete(el){
 
     return (
        
-        <div>
+        <div className='fondo_2'>
+            <div className='container'>
             <Link as={Link} to= '/home'><button>HOME</button></Link>
             <h1>BE CREATIVE 🐾</h1>
             <form onSubmit={(e) => handleSubmit(e)}>
@@ -249,7 +251,7 @@ function  handleDelete(el){
                         <p className='error'>{errors.lmax}</p>
                     )}
                 </div>
-                <label className='temperament'> Temperaments </label>
+                <label> Temperaments </label>
                 <select onChange={(e) => handleSelectTemperament(e)}>
                 {errors.temperament && (
                         <p className='error'>{errors.temperament}</p>
@@ -264,13 +266,14 @@ function  handleDelete(el){
                 </div>
             </form>
             {input.temperament.map(el => 
-                <ul key={el}>
+                <ul className='input_temperament'key={el}>
                   <li>
                     <p>{el}</p>
-                    <button onClick={() => handleDelete(el)}>X</button>
+                    <button className='x' onClick={() => handleDelete(el)}>X</button>
                   </li>
                 </ul>    
                     )}
+        </div>
         </div>
         
     )

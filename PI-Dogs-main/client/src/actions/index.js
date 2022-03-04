@@ -79,17 +79,29 @@ export function orderByWeight(payload) {
 }
 
 export function getDetail(id){
-    if(id){
+    
         return async function (dispatch){
             try {
-                const detail = await axios.get(`http://localhost:3001/dog/${id}`);
-                dispatch ({
-                    type: 'GET_DETAIL',
-                    payload: detail.data
-        })   
-    } catch(error){
-    console.log(error)
-   } 
+                if(id){
+                    const detail = await axios.get(`http://localhost:3001/dog/${id}`);
+                    dispatch ({
+                        type: 'GET_DETAIL',
+                        payload: detail.data
+                    })
+                } else {
+                    dispatch({
+                        type: 'GET_DETAIL',
+                        payload: []
+                        
+        
+                    })
+                }
+
+            } catch(error){
+                console.log(error)   
+
+            }  
+        }            
+    
   }
- }
-}
+ 

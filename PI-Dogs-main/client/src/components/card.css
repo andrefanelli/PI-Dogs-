@@ -1,8 +1,13 @@
 .card_image{
     border-radius: 10px;
-    border: rgb(230, 126, 7) 3px solid ;
+    border: orangered 3px solid ;
     width: 230px;
     height:190px;
     background-color: transparent;
+    opacity: 0.9;
    
-}    
+}  
+
+.card_image:hover{
+    opacity: 1;
+}
